@@ -1,0 +1,98 @@
+﻿<h1>{{ title }}</h1>
+<div class="row">
+    <div class="col-md-6 well">
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <fieldset>
+                <legend>
+                    Vehicle
+                </legend>
+
+                <div class="form-group">
+                    <label for="Make">Make</label>
+                    <select class="form-control" formControlName="Make" id="Make" name="Make" (change)="onSelectMake()">
+                        <option>Select a Make</option>
+                        <option *ngFor="let make of makes" [value]="make.id">{{ make.name }}</option>
+                    </select>
+
+                    <div *ngIf="form.controls.Make.touched && !form.controls.Make.valid" class="alert alert-danger">
+                        Please select a make
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Model">Model</label>
+                    <select class="form-control" formControlName="Model" name="Model" id="Model">
+                        <option>Select a Model</option>
+                        <option *ngFor="let model of models" [value]="model.id">{{ model.name }}</option>
+                    </select>
+
+                    <div *ngIf="form.controls.Model.touched && !form.controls.Model.valid" class="alert alert-danger">
+                        Please select a model
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Registered">Is this car registered?</label>
+                    <div class="checkbox">
+                        <label>
+                            <input type="radio" formControlName="Registered" name="Registered" value="true">
+                            Yes
+                        </label>
+                        <label>
+                            <input type="radio" formControlName="Registered" name="Registered" value="false">
+                            No
+                        </label>
+                    </div>
+
+                    <div *ngIf="form.touched && !form.controls.Registered.valid" class="alert alert-danger">
+                        Please select a value
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Features">Features</label>
+                    <input type="hidden" formControlName="Features" />
+                    
+                    <div class="checkbox" *ngFor="let feature of features">
+                        <label>
+                            <input type="checkbox" name="Features" [value]="feature.id" (change)="onFeatureChange(feature.id)">
+                            {{ feature.name }}
+                        </label>
+                    </div>
+
+                </div>
+
+            </fieldset>
+            <fieldset formGroupName="Contact">
+                <legend>Contact</legend>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" formControlName="Name">
+
+                    <div *ngIf="form.controls.Contact.controls.Name.touched && !form.controls.Contact.controls.Name.valid" class="alert alert-danger">
+                        Please enter a name
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" class="form-control" formControlName="Phone">
+
+                    <div *ngIf="form.controls.Contact.controls.Phone.touched && !form.controls.Contact.controls.Phone.valid" class="alert alert-danger">
+                        Please enter a phone number
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" formControlName="Email">
+
+                    <div *ngIf="form.controls.Contact.controls.Email.touched && !form.controls.Contact.controls.Email.valid" class="alert alert-danger">
+                        Please enter an email address
+                    </div>
+                </div>
+            </fieldset>
+            <button [disabled]="!form.valid" type="submit" class="btn btn-primary">
+                Save
+            </button>
+        </form>
+    </div>
+</div>
